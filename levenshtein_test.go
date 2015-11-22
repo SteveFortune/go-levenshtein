@@ -13,16 +13,29 @@ func AssertDistance(t *testing.T, x, y string, expected int) {
 
 func TestEditDistance(t *testing.T) {
 
-  // Simple word transformations
   AssertDistance(t, "intention", "execution", 5);
   AssertDistance(t, "kitten", "sitting", 3);
   AssertDistance(t, "Saturday", "Sunday", 3);
   AssertDistance(t, "bathroom", "bedroom", 3);
   AssertDistance(t, "sometime", "everytime", 5);
-
-  // Sentence transformations
   AssertDistance(t, "I tink were going work Monay", "I think we're going to work on Monday", 9);
   AssertDistance(t, "Somtims ur wrng", "Sometimes you're wrong", 7);
   AssertDistance(t, "Hw meny hurs til lunch?", "How many hours until lunch?", 5);
+
+}
+
+func TestEditDistanceReturnsZeroForEqualStrings(t *testing.T) {
+
+  AssertDistance(t, "intention", "intention", 0);
+  AssertDistance(t, "kitten", "kitten", 0);
+  AssertDistance(t, "Saturday", "Saturday", 0);
+
+}
+
+func TestEditDistanceReturnsXLenForEmptyY(t *testing.T) {
+
+  AssertDistance(t, "intention", "", 9);
+  AssertDistance(t, "kitten", "", 6);
+  AssertDistance(t, "Saturday", "", 8);
 
 }
