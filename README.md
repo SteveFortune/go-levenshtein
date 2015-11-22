@@ -77,3 +77,6 @@ For each i = 1...m
   - How likely is it that "U.S. President Barack Hussein Obama" and "President Barack Obama" refer to the same person?
 
 ### References
+
+- [Wikipedia](https://en.wikipedia.org/wiki/Levenshtein_distance)
+- [NLP lectures](https://www.youtube.com/watch?v=z_CB7Gih_Mg)
