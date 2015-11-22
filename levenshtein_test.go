@@ -39,3 +39,21 @@ func TestEditDistanceReturnsXLenForEmptyY(t *testing.T) {
   AssertDistance(t, "Saturday", "", 8);
 
 }
+
+func BenchmarkEditDistanceWord(b *testing.B) {
+  for i := 0; i < b.N; i++ {
+    EditDistance("intention", "execution")
+  }
+}
+
+func BenchmarkEditDistanceSentence(b *testing.B) {
+  for i := 0; i < b.N; i++ {
+    EditDistance("Hw meny hurs til lunch?", "How many hours until lunch?")
+  }
+}
+
+func BenchmarkEditDistanceLongProteinSequence(b *testing.B) {
+  for i := 0; i < b.N; i++ {
+    EditDistance("ADDCTACACCTGACCTCCAGGCCGATACCCCADDCCTTCACACATGAGTTTCTCAA", "ADDCTACGGGTAGGCCTTCCCCCCADDCCTTCACACATGAGTTTCTC")
+  }
+}
