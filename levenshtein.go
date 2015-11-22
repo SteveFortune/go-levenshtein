@@ -15,7 +15,7 @@ func min(arr []int) int {
 }
 
 // EditDistance options. Allows the consumer of the API to
-// specify weights associated with each opteration and whether
+// specify weights associated with each operation and whether
 // a backtrace should be computed.
 type Opts struct {
   InsWeight int
@@ -24,8 +24,8 @@ type Opts struct {
   Backtrace bool
 }
 
-// Default options EditDistance options; all weights are 1
-// and no backtrace is requested.
+// Default EditDistance options; all weights are 1 and no backtrace
+// is requested.
 var DefaultOpts = Opts{ 1, 1, 1, false }
 
 type Backtrace struct {
