@@ -1,7 +1,7 @@
 
 package levelshtein
 
-import "fmt"
+//import "fmt"
 
 func min(arr []int) int {
   if len(arr) == 0 {
@@ -55,7 +55,6 @@ func EditDistance(x, y string) int {
       } else if j == 0 {
         cost = i
       } else {
-        fmt.Println("- Finding cost at ", i, j)
         lastI := i - 1
         lastJ := j - 1
         del := costs[lastI][j] + 1
