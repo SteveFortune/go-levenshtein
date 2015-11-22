@@ -76,6 +76,25 @@ For each i = 1...m
   - How likely is it that "IBM" and "IBM Inc" refer to the same entity?
   - How likely is it that "U.S. President Barack Hussein Obama" and "President Barack Obama" refer to the same person?
 
+
+### Optimisations
+
+Version 1:
+
+```
+BenchmarkEditDistanceWord-8               	 1000000	      1991 ns/op	    1040 B/op	      11 allocs/op
+BenchmarkEditDistanceSentence-8           	  200000	     10986 ns/op	    5952 B/op	      25 allocs/op
+BenchmarkEditDistanceLongProteinSequence-8	   30000	     46064 ns/op	   23296 B/op	      58 allocs/op
+```
+
+Version 2:
+
+```
+BenchmarkEditDistanceWord-8               	 1000000	      1240 ns/op	     160 B/op	       2 allocs/op
+BenchmarkEditDistanceSentence-8           	  200000	      8349 ns/op	     448 B/op	       2 allocs/op
+BenchmarkEditDistanceLongProteinSequence-8	   50000	     35135 ns/op	     768 B/op	       2 allocs/op
+```
+
 ### References
 
 - [Wikipedia](https://en.wikipedia.org/wiki/Levenshtein_distance)
