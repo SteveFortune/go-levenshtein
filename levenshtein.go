@@ -14,6 +14,9 @@ func min(arr []int) int {
   return min
 }
 
+// EditDistance options. Allows the consumer of the API to
+// specify weights associated with each opteration and whether
+// a backtrace should be computed.
 type Opts struct {
   InsWeight int
   DelWeight int
@@ -21,6 +24,8 @@ type Opts struct {
   Backtrace bool
 }
 
+// Default options EditDistance options; all weights are 1
+// and no backtrace is requested.
 var DefaultOpts = Opts{ 1, 1, 1, false }
 
 type Backtrace struct {
@@ -28,6 +33,14 @@ type Backtrace struct {
   trace []int
 }
 
+// Private struct that holds the Levenshtein matrix data. It hides
+// the memory management of the matrix from the `EditDistance`
+// impl. If we require a backtrace, `lMtrx` will retain the entire
+// matrix, otherwise, to improve performance, it will only retain
+// the data necessary to calculate the total edit distance.
+// `EditDistance` should read and write to the `col` and `lastCol`
+// slices and should call `nextCol` when it wants `col` and
+// `lastCol` to shift up the matrix.
 type lMtrx struct {
 
   backtrace bool
