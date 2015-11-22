@@ -36,16 +36,12 @@ func EditDistance(x, y string) int {
     return m
   }
 
-  costs := make([][]int, n)
+  lastCol := make([]int, m)
+  col := make([]int, m)
 
-  for i, _ := range costs {
-
-    costs[i] = make([]int, m)
-
-    for j, _ := range costs[i] {
-
+  for i := 0; i < n; i++ {
+    for j := 0; j < m; j++ {
       var cost int
-
       if i == 0 && j == 0 {
         cost = 0
       } else if i == 0 {
@@ -55,20 +51,19 @@ func EditDistance(x, y string) int {
       } else {
         lastI := i - 1
         lastJ := j - 1
-        del := costs[lastI][j] + 1
-        ins := costs[i][lastJ] + 1
-        sub := costs[lastI][lastJ]
+        del := lastCol[j] + 1
+        ins := col[lastJ] + 1
+        sub := lastCol[lastJ]
         if x[lastI] != y[lastJ] {
           sub++
         }
         cost = min([]int{del, ins, sub})
       }
-
-      costs[i][j] = cost
-
+      col[j] = cost
     }
+    lastCol, col = col, lastCol
   }
 
-  return costs[n - 1][m - 1]
+  return lastCol[m - 1]
 
 }
