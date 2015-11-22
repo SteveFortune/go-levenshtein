@@ -7,7 +7,13 @@ import (
 
 func AssertDistance(t *testing.T, x, y string, expected int) {
   if cost := EditDistance(x, y); cost != expected {
-    t.Errorf("Expected distance between \"%s\" and \"%s\" was %d, expected to be %d", x, y, cost, expected)
+    t.Errorf("Distance between \"%s\" and \"%s\" was %d, expected to be %d", x, y, cost, expected)
+  }
+}
+
+func AssertDistanceCal(t *testing.T, x, y string, subWeight int, expected int) {
+  if cost := EditDistanceWeight(x, y, subWeight); cost != expected {
+    t.Errorf("Distance between \"%s\" and \"%s\" with substitution weight of %d was %d, expected to be %d", x, y, subWeight, cost, expected)
   }
 }
 
@@ -21,6 +27,19 @@ func TestEditDistance(t *testing.T) {
   AssertDistance(t, "I tink were going work Monay", "I think we're going to work on Monday", 9);
   AssertDistance(t, "Somtims ur wrng", "Sometimes you're wrong", 7);
   AssertDistance(t, "Hw meny hurs til lunch?", "How many hours until lunch?", 5);
+
+}
+
+func TestEditDistanceWeight(t *testing.T) {
+
+  AssertDistanceCal(t, "intention", "execution", 2, 8);
+  AssertDistanceCal(t, "kitten", "sitting", 4, 5);
+  AssertDistanceCal(t, "Saturday", "Sunday", 3, 4);
+  AssertDistanceCal(t, "bathroom", "bedroom", 6, 5);
+  AssertDistanceCal(t, "sometime", "everytime", 4, 7);
+  AssertDistanceCal(t, "I tink were going work Monay", "I think we're going to work on Monday", 2, 9);
+  AssertDistanceCal(t, "Somtims ur wrng", "Sometimes you're wrong", 3, 7);
+  AssertDistanceCal(t, "Hw meny hurs til lunch?", "How many hours until lunch?", 3, 6);
 
 }
 

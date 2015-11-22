@@ -14,13 +14,20 @@ func min(arr []int) int {
   return min
 }
 
+// Calls `EditDistanceCal` with the default substitution
+// calibration
+//
+func EditDistance(x, y string) int {
+  return EditDistanceWeight(x, y, 0)
+}
+
 // For each i = 1...m
 //   For each j = 1...n
 //                   { d(i-1,j) + 1
 //     d(i,j) = min  { d(i,j-1) + 1
 //                   { d(i-1,j-1) +  1; { if x(i) ≠ y(j)
 //                                   0; { if x(i) = y(j)
-func EditDistance(x, y string) int {
+func EditDistanceWeight(x, y string, subWeight int) int {
 
   if x == y {
     return 0
@@ -34,6 +41,10 @@ func EditDistance(x, y string) int {
   }
   if n == 0 {
     return m
+  }
+
+  if subWeight == 0 {
+    subWeight = 1
   }
 
   lastCol := make([]int, m)
@@ -55,7 +66,7 @@ func EditDistance(x, y string) int {
         ins := col[lastJ] + 1
         sub := lastCol[lastJ]
         if x[lastI] != y[lastJ] {
-          sub++
+          sub += subWeight
         }
         cost = min([]int{del, ins, sub})
       }

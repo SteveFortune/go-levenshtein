@@ -99,3 +99,4 @@ BenchmarkEditDistanceLongProteinSequence-8	   50000	     35135 ns/op	     768 B/
 
 - [Wikipedia](https://en.wikipedia.org/wiki/Levenshtein_distance)
 - [NLP lectures](https://www.youtube.com/watch?v=z_CB7Gih_Mg)
+- [Online Levenshtein Demo](http://www.let.rug.nl/~kleiweg/lev/)
