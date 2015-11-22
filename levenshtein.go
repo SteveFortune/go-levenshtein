@@ -61,13 +61,15 @@ func newlMtrx(src, dst string, backtrace bool) *lMtrx {
 
 }
 
-func (m *lMtrx) nextCols(i) ([]int, []int) {
+func (m *lMtrx) nextCols(i) {
   if m.backtrace {
-    m.fullMtrx[i] = make([]int, m.m)
-    return m.fullMtrx[i], i > 0 ? m.fullMtrx[i - 1] : nil
+    m.col = make([]int, m.m)
+    m.fullMtrx[i] = m.col
+    if i > 0 {
+      m.lastCol = m.fullMtrx[i - 1]
+    }
   } else {
     m.lastCol, m.col = m.col, m.lastCol
-    return m.col, m.lastCol
   }
 }
 
@@ -78,11 +80,8 @@ func EditDistance(src, dst string, options Opts) int {
   }
 
   m := newlMtrx(src, dst, options.Backtrace)
-  var col []int
-  var lastCol []int
 
-  for i := 0; i < m.n; i++ {
-    col, lastCol = m.nextCols(i)
+  for i := 0; i < m.n; i++, m.nextCols(i) {
     for j := 0; j < m.m; j++ {
       var cost int
       if i == 0 && j == 0 {
@@ -94,18 +93,18 @@ func EditDistance(src, dst string, options Opts) int {
       } else {
         lastI := i - 1
         lastJ := j - 1
-        del := lastCol[j] + 1
-        ins := col[lastJ] + 1
-        sub := lastCol[lastJ]
+        del := m.lastCol[j] + 1
+        ins := m.col[lastJ] + 1
+        sub := m.lastCol[lastJ]
         if x[lastI] != y[lastJ] {
           sub += subWeight
         }
         cost = min([]int{del, ins, sub})
       }
-      col[j] = cost
+      m.col[j] = cost
     }
   }
 
-  return col[m.m - 1],
+  return m.col[m.m - 1],
 
 }
