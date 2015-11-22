@@ -21,6 +21,8 @@ type Opts struct {
   Backtrace bool
 }
 
+var DefaultOpts = Opts{ 1, 1, 1, false }
+
 type Backtrace struct {
   mtrx *lMtrx
   trace []int

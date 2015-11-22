@@ -6,13 +6,13 @@ import (
 )
 
 func AssertDistance(t *testing.T, x, y string, expected int) {
-  if cost := EditDistance(x, y); cost != expected {
+  if cost, _ := EditDistance(x, y, DefaultOpts); cost != expected {
     t.Errorf("Distance between \"%s\" and \"%s\" was %d, expected to be %d", x, y, cost, expected)
   }
 }
 
 func AssertDistanceCal(t *testing.T, x, y string, subWeight int, expected int) {
-  if cost := EditDistanceWeight(x, y, subWeight); cost != expected {
+  if cost, _ := EditDistance(x, y, Opts{ 1, 1, subWeight, false }); cost != expected {
     t.Errorf("Distance between \"%s\" and \"%s\" with substitution weight of %d was %d, expected to be %d", x, y, subWeight, cost, expected)
   }
 }
@@ -61,18 +61,18 @@ func TestEditDistanceReturnsXLenForEmptyY(t *testing.T) {
 
 func BenchmarkEditDistanceWord(b *testing.B) {
   for i := 0; i < b.N; i++ {
-    EditDistance("intention", "execution")
+    EditDistance("intention", "execution", DefaultOpts)
   }
 }
 
 func BenchmarkEditDistanceSentence(b *testing.B) {
   for i := 0; i < b.N; i++ {
-    EditDistance("Hw meny hurs til lunch?", "How many hours until lunch?")
+    EditDistance("Hw meny hurs til lunch?", "How many hours until lunch?", DefaultOpts)
   }
 }
 
 func BenchmarkEditDistanceLongProteinSequence(b *testing.B) {
   for i := 0; i < b.N; i++ {
-    EditDistance("ADDCTACACCTGACCTCCAGGCCGATACCCCADDCCTTCACACATGAGTTTCTCAA", "ADDCTACGGGTAGGCCTTCCCCCCADDCCTTCACACATGAGTTTCTC")
+    EditDistance("ADDCTACACCTGACCTCCAGGCCGATACCCCADDCCTTCACACATGAGTTTCTCAA", "ADDCTACGGGTAGGCCTTCCCCCCADDCCTTCACACATGAGTTTCTC", DefaultOpts)
   }
 }
