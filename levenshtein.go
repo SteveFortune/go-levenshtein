@@ -15,18 +15,21 @@ func min(arr []int) int {
 }
 
 // Calls `EditDistanceCal` with the default substitution
-// calibration
+// weight.
 //
 func EditDistance(x, y string) int {
   return EditDistanceWeight(x, y, 0)
 }
 
-// For each i = 1...m
-//   For each j = 1...n
-//                   { d(i-1,j) + 1
-//     d(i,j) = min  { d(i,j-1) + 1
-//                   { d(i-1,j-1) +  1; { if x(i) ≠ y(j)
-//                                   0; { if x(i) = y(j)
+// Finds the edit distance between 2 strings. Uses the
+// following algorithm:
+//
+//  For each i = 1...m
+//    For each j = 1...n
+//                     { d(i-1,j) + 1
+//       d(i,j) = min  { d(i,j-1) + 1
+//                     { d(i-1,j-1) +  1; { if x(i) ≠ y(j)
+//                                     0; { if x(i) = y(j)
 func EditDistanceWeight(x, y string, subWeight int) int {
 
   if x == y {
