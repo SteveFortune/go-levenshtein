@@ -89,6 +89,25 @@ func (m *lMtrx) nextCol(i int) {
 
 }
 
+func (m *lMtrx) last() int {
+  return mt.col[mt.m - 1]
+}
+
+func recursePath(i, j int, m *lMtrx, options Opts) *Backtrace {
+  if i > 0 && m.fullMtrx[i - i][j]
+  return &Backtrace{
+    mtrx: m,
+    trace: make([]int, 0, m.n + m.m)
+  }
+}
+
+func backtrace(m *lMtrx, options Opts) {
+  if !options.Backtrace {
+    return nil
+  }
+  return recursePath(m.n - 1, m.m - 1, m, options)
+}
+
 func EditDistance(src, dst string, options Opts) (int, *Backtrace) {
 
   if src == dst {
@@ -132,6 +151,6 @@ func EditDistance(src, dst string, options Opts) (int, *Backtrace) {
     }
   }
 
-  return mt.col[mt.m - 1], &Backtrace{}
+  return mt.last(), backtrace(mt, options)
 
 }
