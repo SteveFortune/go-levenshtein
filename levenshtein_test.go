@@ -1,5 +1,5 @@
 
-package levelshtein
+package levenshtein
 
 import (
   "testing"

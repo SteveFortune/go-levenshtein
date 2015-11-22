@@ -1,5 +1,5 @@
 
-package levelshtein
+package levenshtein
 
 func min(arr []int) int {
   if len(arr) == 0 {
@@ -14,47 +14,76 @@ func min(arr []int) int {
   return min
 }
 
-// Calls `EditDistanceCal` with the default substitution
-// weight.
-//
-func EditDistance(x, y string) int {
-  return EditDistanceWeight(x, y, 0)
+type Opts struct {
+  Insert int
+  Delete int
+  Substitute int
+  Backtrace bool
 }
 
-// Finds the edit distance between 2 strings. Uses the
-// following algorithm:
-//
-//  For each i = 1...m
-//    For each j = 1...n
-//                     { d(i-1,j) + 1
-//       d(i,j) = min  { d(i,j-1) + 1
-//                     { d(i-1,j-1) +  1; { if x(i) ≠ y(j)
-//                                     0; { if x(i) = y(j)
-func EditDistanceWeight(x, y string, subWeight int) int {
+type Backtrace struct {
+  mtrx *lMtrx
+  trace []int
+}
+
+type lMtrx struct {
+
+  backtrace bool
+  fullMtrx [][]int
+  lastCol []int
+  col []int
+
+  src string
+  dst string
+  n int
+  m int
+
+}
+
+func newlMtrx(src, dst string, backtrace bool) *lMtrx {
+
+  mt := &lMtrx{
+    backtrace: backtrace,
+    src: src,
+    dst: dst,
+    n: len(src) + 1,
+    m: len(dst) + 1
+  }
+
+  if (backtrace) {
+    mt.fullMtrx = make([][]int, mt.n)
+  } else {
+    mt.lastCol := make([]int, mt.m)
+    mt.col := make([]int, mt.m)
+  }
+
+  return mt
+
+}
+
+func (m *lMtrx) nextCols(i) ([]int, []int) {
+  if m.backtrace {
+    m.fullMtrx[i] = make([]int, m.m)
+    return m.fullMtrx[i], i > 0 ? m.fullMtrx[i - 1] : nil
+  } else {
+    m.lastCol, m.col = m.col, m.lastCol
+    return m.col, m.lastCol
+  }
+}
+
+func EditDistance(src, dst string, options Opts) int {
 
   if x == y {
     return 0
   }
 
-  var n = len(x) + 1
-  var m = len(y) + 1
+  m := newlMtrx(src, dst, options.Backtrace)
+  var col []int
+  var lastCol []int
 
-  if m == 0 {
-    return n
-  }
-  if n == 0 {
-    return m
-  }
-
-  if subWeight == 0 {
-    subWeight = 1
-  }
-
-  lastCol := make([]int, m)
-  col := make([]int, m)
-
-  for i := 0; i < n; i++ {
-    for j := 0; j < m; j++ {
+  for i := 0; i < m.n; i++ {
+    col, lastCol = m.nextCols(i)
+    for j := 0; j < m.m; j++ {
       var cost int
       if i == 0 && j == 0 {
         cost = 0
@@ -75,9 +104,8 @@ func EditDistanceWeight(x, y string, subWeight int) int {
       }
       col[j] = cost
     }
-    lastCol, col = col, lastCol
   }
 
-  return lastCol[m - 1]
+  return col[m.m - 1],
 
 }
