@@ -59,11 +59,11 @@ I   N   T   E   *   N   T   I   O   N
 - Recurrence relation:
 
 ```
-For each i = 1...M
-  For each j = 1...N
+For each i = 1...m
+  For each j = 1...n
                   { d(i-1,j) + 1
-    D(i,j) = min  { d(i,j-1) + 1
-                  { d(i-1,j-1) +  2; { if x(i) ≠ y(j)
+    d(i,j) = min  { d(i,j-1) + 1
+                  { d(i-1,j-1) +  1; { if x(i) ≠ y(j)
                                   0; { if x(i) = y(j)
 
 ```
