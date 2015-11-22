@@ -1,8 +1,6 @@
 
 package levelshtein
 
-//import "fmt"
-
 func min(arr []int) int {
   if len(arr) == 0 {
     return 0
