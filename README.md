@@ -72,7 +72,7 @@ For each i = 1...m
 
 - Spelling checking
 - Diff-ing sentences to determine how close they are (machine translation accuracy, paraphrasing, etc)
-- Named entity extraction;
+- Named entity extraction:
   - How likely is it that "IBM" and "IBM Inc" refer to the same entity?
   - How likely is it that "U.S. President Barack Hussein Obama" and "President Barack Obama" refer to the same person?
 
